@@ -1,4 +1,4 @@
-(defproject org.clojars.wang/simple-logging "0.0.0"
+(defproject org.clojars.wang/simple-logging "0.0.1"
   :description "FIXME: write description"
   :url "https://github.com/tendant/simple-logging"
   :license {:name "Eclipse Public License"
