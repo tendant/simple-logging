@@ -10,7 +10,7 @@ A Clojure library designed to simplify logging configuration.
 ```
 
 ```clj
-simple-logging {:mvn/version "0.0.0"}
+simple-logging {:mvn/version "0.0.1"}
 ```
 
 ## Usage
