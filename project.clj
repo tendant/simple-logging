@@ -3,7 +3,11 @@
   :url "https://github.com/org.clojars.wang/simple-logging"
   :license {:name "Eclipse Public License"
             :url  "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies []
+  :dependencies [[com.taoensso/timbre "5.1.2"]
+                 [com.fzakaria/slf4j-timbre "0.3.19"]
+                 [org.slf4j/slf4j-api "1.7.21"]
+                 [org.slf4j/log4j-over-slf4j "1.7.30"]
+                 [cheshire/cheshire "5.10.0"]]
   :plugins [[lein-cloverage "1.0.13"]
             [lein-shell "0.5.0"]
             [lein-ancient "0.6.15"]
