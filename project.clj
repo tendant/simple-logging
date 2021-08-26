@@ -1,4 +1,4 @@
-(defproject org.clojars.wang/simple-logging "0.0.2"
+(defproject org.clojars.wang/simple-logging "0.0.3"
   :description "FIXME: write description"
   :url "https://github.com/tendant/simple-logging"
   :license {:name "Eclipse Public License"
@@ -19,7 +19,7 @@
                   ["change" "version" "leiningen.release/bump-version"]
                   ["change" "version" "leiningen.release/bump-version" "release"]
                   ["changelog" "release"]
-                  ["update-readme-version"]
+                  ;; ["update-readme-version"]
                   ["vcs" "commit"]
                   ["vcs" "tag"]
                   ["deploy"]
