@@ -1,6 +1,6 @@
-(defproject simple-logging "0.0.0"
+(defproject org.clojars.wang/simple-logging "0.0.0"
   :description "FIXME: write description"
-  :url "https://github.com/org.clojars.wang/simple-logging"
+  :url "https://github.com/tendant/simple-logging"
   :license {:name "Eclipse Public License"
             :url  "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[com.taoensso/timbre "5.1.2"]
