@@ -54,25 +54,14 @@
                       opts)))
   opts)
 
-(defn deploy
-  [opts]
-  (-> opts
-      (assoc :lib lib :version version)
-      (git-tag-version {:version version})
-      (jar)
-      (clojars)))
-
-(defn git-tag-version
+(defn- git-tag-version
   "Shells out to git and tag current commit using version:
     git tag <version>
   Options:
     :dir - dir to invoke this command from, by default current directory
     :path - path to count commits for relative to dir"
   [{:keys [dir path version] :or {dir "."} :as opts}]
-  (println {:command-args (cond-> ["git" "tag" version]
-                       path (conj "--" path))
-            :dir (.getPath (b/resolve-path dir))
-            :out :capture})
+  (println "git tag version:" version)
   (-> {:command-args (cond-> ["git" "tag" version]
                        path (conj "--" path))
        :dir (.getPath (b/resolve-path dir))
@@ -80,3 +69,42 @@
       b/process
       :out)
   opts)
+
+(defn local-changes?
+  [{:keys [dir path] :or {dir "."} :as opts}]
+  (-> {:command-args (cond-> ["git" "status" "--porcelain"]
+                       path (conj "--" path))
+       :dir (.getPath (b/resolve-path dir))
+       :out :capture}
+      b/process
+      :out))
+
+(defn no-local-change
+  [opts]
+  (let [changes (local-changes? opts)]
+    (if (empty? changes)
+      opts
+      (throw (ex-info (format "Local change detected, please commit your local change first!%n%s" changes)
+                      {:changes changes})))))
+
+(defn tag
+  "Tag current commit using version"
+  [opts]
+  (-> opts
+      (assoc :lib lib :version version)
+      (git-tag-version)))
+
+(defn deploy
+  [opts]
+  (-> opts
+      (assoc :lib lib :version version)
+      (no-local-change)
+      (git-tag-version)
+      (jar)
+      (clojars)))
+
+(defn debug
+  [opts]
+  (-> opts
+      (assoc :lib lib :version version)
+      no-local-change))
