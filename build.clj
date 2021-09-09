@@ -87,6 +87,33 @@
       (throw (ex-info (format "Local change detected, please commit your local change first!%n%s" changes)
                       {:changes changes})))))
 
+(defn update-lein-version
+  [{:keys [dir file lib version] :or {dir "." file "README.md"} :as opts}]
+  (let [lib-name (clojure.string/replace (str lib) "/" "\\/")
+        _ (println "lib-name:" lib-name)
+        replace (format "s/\\(%s\\) \".*\"/\\1 \"%s\"/g" lib-name version)]
+    (printf "Update version number to %s in file %s%n" version file)
+    (-> {:command-args ["sed" "-i" "" replace file]
+         :dir (.getPath (b/resolve-path dir))
+         :out :capture}
+        b/process
+        :out)
+    opts))
+
+(defn update-deps-version
+  [{:keys [dir file lib version] :or {dir "." file "README.md"} :as opts}]
+  (let [lib-name (clojure.string/replace (str lib) "/" "\\/")
+        _ (println "lib-name:" lib-name)
+        replace (format "s/\\(%s\\) {:mvn\\/version \".*\"}/\\1 {:mvn\\/version \"%s\"}/g" lib-name version)]
+    (println "replace:" replace)
+    (printf "Update version number to %s in file %s%n" version file)
+    (-> {:command-args ["sed" "-i" "" replace file]
+         :dir (.getPath (b/resolve-path dir))
+         :out :capture}
+        b/process
+        :out)
+    opts))
+
 (defn tag
   "Tag current commit using version"
   [opts]
@@ -101,10 +128,13 @@
       (no-local-change)
       (git-tag-version)
       (jar)
-      (clojars)))
+      (clojars)
+      (update-lein-version)
+      (update-deps-version)))
 
 (defn debug
   [opts]
   (-> opts
       (assoc :lib lib :version version)
-      no-local-change))
+      update-lein-version
+      update-deps-version))
