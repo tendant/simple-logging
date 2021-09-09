@@ -2,7 +2,7 @@
   (:require [clojure.tools.build.api :as b]
             [org.corfield.build :as bb]
             [deps-deploy.deps-deploy :as dd]
-            ))
+            [clojure.string :as string]))
 
 (def lib 'org.clojars.wang/simple-logging)
 ;; if you want a version of MAJOR.MINOR.COMMITS:
@@ -58,5 +58,25 @@
   [opts]
   (-> opts
       (assoc :lib lib :version version)
+      (git-tag-version {:version version})
       (jar)
       (clojars)))
+
+(defn git-tag-version
+  "Shells out to git and tag current commit using version:
+    git tag <version>
+  Options:
+    :dir - dir to invoke this command from, by default current directory
+    :path - path to count commits for relative to dir"
+  [{:keys [dir path version] :or {dir "."} :as opts}]
+  (println {:command-args (cond-> ["git" "tag" version]
+                       path (conj "--" path))
+            :dir (.getPath (b/resolve-path dir))
+            :out :capture})
+  (-> {:command-args (cond-> ["git" "tag" version]
+                       path (conj "--" path))
+       :dir (.getPath (b/resolve-path dir))
+       :out :capture}
+      b/process
+      :out)
+  opts)
