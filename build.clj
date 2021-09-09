@@ -41,17 +41,22 @@
         (b/install))
     opts))
 
-(defn deploy
+(defn clojars
   "Deploy the JAR to Clojars.
   Requires: lib, version"
-  [{:keys [target class-dir lib version jar-file] :as opts}]
+  [{:keys [lib version target class-dir jar-file] :as opts}]
   (assert (and lib version) "lib and version are required for deploy")
   (let [target    (or target default-target)
         class-dir (or class-dir (default-class-dir target))
         jar-file  (or jar-file (default-jar-file target lib version))]
-    (-> opts
-        (jar)
-        (dd/deploy (merge {:installer :remote :artifact jar-file
-                           :pom-file (b/pom-path {:lib lib :class-dir class-dir})}
-                          opts))))
+    (dd/deploy (merge {:installer :remote :artifact jar-file
+                       :pom-file (b/pom-path {:lib lib :class-dir class-dir})}
+                      opts)))
   opts)
+
+(defn deploy
+  [opts]
+  (-> opts
+      (assoc :lib lib :version version)
+      (jar)
+      (clojars)))
