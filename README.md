@@ -48,9 +48,19 @@ To bridge jboss logging in ```clj -M:run```:
       :jvm-opts ["-Dorg.jboss.logging.provider=slf4j"]}
 ```
 
+## Development
+
+1. Install to local ~/.m2 maven repository
+
+    clj -T:build install
+    
+2. Deploy to clojars
+
+    clj -T:build deploy
+
 ## License
 
-Copyright © 2018 FIXME
+Copyright © 2021 Lei
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
