@@ -1,7 +1,5 @@
 # simple-logging
-[![Build Status](https://travis-ci.org/org.clojars.wang/simple-logging.svg?branch=master)](https://travis-ci.org/org.clojars.wang/simple-logging)
-[![codecov](https://codecov.io/gh/org.clojars.wang/simple-logging/branch/master/graph/badge.svg)](https://codecov.io/gh/org.clojars.wang/simple-logging)
-[![Clojars Project](https://img.shields.io/clojars/v/simple-logging.svg)](https://clojars.org/simple-logging)
+[![Clojars Project](https://img.shields.io/clojars/v/org.clojars.wang/simple-logging.svg)](https://clojars.org/org.clojars.wang/simple-logging)
 
 A Clojure library designed to simplify logging configuration.
 
