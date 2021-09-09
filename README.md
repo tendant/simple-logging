@@ -6,11 +6,11 @@
 A Clojure library designed to simplify logging configuration.
 
 ```clj
-[org.clojars.wang/simple-logging "0.0.13"]
+[org.clojars.wang/simple-logging "0.0.15"]
 ```
 
 ```clj
-org.clojars.wang/simple-logging {:mvn/version "0.0.13"}
+org.clojars.wang/simple-logging {:mvn/version "0.0.15"}
 ```
 
 ## Usage
