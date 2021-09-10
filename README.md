@@ -49,13 +49,13 @@ To bridge jboss logging in ```clj -M:run```:
 ## Development
 
 1. Install to local ~/.m2 maven repository
-
+```shell
     clj -T:build install
-    
+```
 2. Deploy to clojars
-
+```shell
     clj -T:build deploy
-
+```
 ## License
 
 Copyright © 2021 Lei
