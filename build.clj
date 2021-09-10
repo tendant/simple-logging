@@ -25,4 +25,3 @@
   (-> opts
       (assoc :lib lib :version version)
       (sb/release)))
-
